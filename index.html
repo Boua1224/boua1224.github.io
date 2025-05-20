@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>法師命中率計算器</title>
+  <style>
+    body {
+      background-image: url('https://live.staticflickr.com/65535/54518005682_c88da88ed1_b.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Comic Sans MS', 'Noto Sans TC', sans-serif;
+      color: #3b2b1d;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: rgba(255, 244, 222, 0.92);
+      border: 5px solid #a06d2c;
+      border-radius: 15px;
+      max-width: 420px;
+      margin: 40px auto;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 30px;
+      color: #d38c00;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 3px #00000066;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #c6a27b;
+      border-radius: 6px;
+      background-color: #fffaf0;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to bottom, #ffd648, #ffb700);
+      border: 2px solid #a96d00;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 18px;
+      cursor: pointer;
+      box-shadow: 2px 2px 6px #555;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to bottom, #ffe07a, #ffc533);
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #004488;
+      background-color: #fff5cc;
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>法師命中率計算器</h2>
+    <div class="input-group">
+      <label for="int">角色智力</label>
+      <input type="number" id="int" placeholder="請輸入角色智力">
+    </div>
+    <div class="input-group">
+      <label for="luk">角色幸運</label>
+      <input type="number" id="luk" placeholder="請輸入角色幸運">
+    </div>
+    <div class="input-group">
+      <label for="eva">怪物迴避值</label>
+      <input type="number" id="eva" placeholder="請輸入怪物迴避值">
+    </div>
+    <div class="input-group">
+      <label for="mobLevel">怪物等級</label>
+      <input type="number" id="mobLevel" placeholder="請輸入怪物等級">
+    </div>
+    <div class="input-group">
+      <label for="charLevel">角色等級</label>
+      <input type="number" id="charLevel" placeholder="請輸入角色等級">
+    </div>
+    <button onclick="calculate()">計算命中率</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const int = parseFloat(document.getElementById('int').value) || 0;
+      const luk = parseFloat(document.getElementById('luk').value) || 0;
+      const eva = parseFloat(document.getElementById('eva').value) || 0;
+      const mobLv = parseFloat(document.getElementById('mobLevel').value) || 0;
+      const charLv = parseFloat(document.getElementById('charLevel').value) || 0;
+
+      const numerator = (int + luk) / 10;
+      const denominator = (eva + 1) * (1 + 0.04 * (mobLv - charLv));
+      const accuracy = Math.max(0, Math.min(100, (numerator / denominator) * 100)).toFixed(2);
+
+      document.getElementById('result').innerText = `命中率：${accuracy}%`;
+    }
+  </script>
+</body>
+</html>
